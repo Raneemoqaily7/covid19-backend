@@ -1,11 +1,11 @@
 from http.client import HTTPResponse
 import requests
+import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 # from .models import TotalStatistics
 from django.core.management.base import BaseCommand
-
 
 @api_view(['GET'])
 
@@ -20,6 +20,15 @@ def get_total(req):
     return Response(data)
 
 
+@api_view(['POST'])
+
+def post_addtomyrecords(req, data):
+
+    if req.method == 'POST':
+     print(data, "dataaaaaaaaaaaa")
+     
+    
+    return Response( '')
 
 
 #In the index view of user.views: 
@@ -35,7 +44,7 @@ def get_query(req,country,startdate,enddate):
         url =f"https://api.covid19api.com/country/{country}/status/confirmed?from={startdate}T00:00:00Z&to={enddate}T00:00:00Z"
         
      
-        response = requests.request("GET" ,url ,headers=headers , data=payload , text = text )
+        response = requests.request("GET" ,url ,headers=headers , data=payload  )
         return Response (response.json())
     
 
