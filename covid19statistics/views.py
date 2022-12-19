@@ -3,7 +3,7 @@ import requests
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import TotalStatistics
+# from .models import TotalStatistics
 from django.core.management.base import BaseCommand
 
 
@@ -26,21 +26,16 @@ def get_total(req):
 @api_view(['GET' ,"POST"])
 
 def get_query(req,country,startdate,enddate):
-    
+    print (country , "coooontryyyy")
     if req.method =="GET":
-        headers ={}
-        payload={}
-        print(country,'suraaa')
-        print(startdate,'suraaa')
-        print(enddate,'suraaa')
-         # country = req.GET.get('country')
-        # startdate = req.query_params.get('startdate')
-        # enddate = req.query_params.get('enddate')
-        # https://api.covid19api.com/country/south-africa/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z
+        text = {"sura" : "raneem"}
+        headers ={"name" : "sura"}
+        payload={"name" : "sura"}
+        print (country , "llllllllllllllllll")
         url =f"https://api.covid19api.com/country/{country}/status/confirmed?from={startdate}T00:00:00Z&to={enddate}T00:00:00Z"
         
      
-        response = requests.request("GET" ,url ,headers=headers , data=payload)
+        response = requests.request("GET" ,url ,headers=headers , data=payload , text = text )
         return Response (response.json())
     
 

@@ -2,14 +2,14 @@ import requests
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from  covid19statistics.models import TotalStatistics
+from  covid19statistics.models import SumaryStatistics
 from django.core.management.base import BaseCommand
 
 
 
 
 def get_query():
-    url = 'https://api.covid19api.com/world/total'
+    url = 'https://api.covid19api.com/summary'
     r = requests.get(url, headers={'Content-Type':'application/json'})
     data = r.json()
 
@@ -19,10 +19,13 @@ def get_query():
 def seed_total_statistics():
     
     
-    total = TotalStatistics(
+    total = SumaryStatistics(
+        Country = get_query()["Country"],
         TotalConfirmed= get_query()["TotalConfirmed"],
         TotalDeaths= get_query()["TotalDeaths"],
         TotalRecovered =get_query()["TotalRecovered"],
+
+
         )
         
     
@@ -30,7 +33,7 @@ def seed_total_statistics():
 
 
 def clear_data():
-      TotalStatistics.objects.all().delete()
+      SumaryStatistics.objects.all().delete()
 
 
 class Command(BaseCommand):

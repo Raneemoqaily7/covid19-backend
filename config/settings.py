@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-)k77$5=epf((@63&a$dt^znt6!p0*00y7uenj_y_v#^6bw7hy6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["1de0-2a01-9700-1aa2-2f00-850b-c671-4ca4-6732.eu.ngrok.io"]
 
 
 # Application definition
@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'nksplfwi',
+        'USER': 'nksplfwi',
+        'PASSWORD': 'pnb_zHWKaj4O6BdFflOQDv_F_5MwkeDi',
+        'HOST': 'surus.db.elephantsql.com',
+        'PORT': '',
     }
 }
 
