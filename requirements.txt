@@ -1,0 +1,13 @@
+asgiref==3.5.2
+certifi==2022.12.7
+charset-normalizer==2.1.1
+-e git+ssh://git@github.com/Raneemoqaily7/covid19-backend.git@732b5f7d5bfd28db8b23d47577b2a7d36dc4b1cf#egg=covid19
+Django==4.1.4
+django-cors-headers==3.13.0
+djangorestframework==3.14.0
+idna==3.4
+psycopg2-binary==2.9.5
+pytz==2022.6
+requests==2.28.1
+sqlparse==0.4.3
+urllib3==1.26.13
