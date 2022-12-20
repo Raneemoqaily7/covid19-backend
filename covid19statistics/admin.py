@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import SumaryStatistics
+from .models import AllRecords
 # Register your models here.
-admin.site.register(SumaryStatistics)
+admin.site.register(AllRecords)

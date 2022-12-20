@@ -4,8 +4,10 @@ import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-# from .models import TotalStatistics
-from django.core.management.base import BaseCommand
+from covid19statistics.api.serializers import AllRecordsSerializer
+from .models import AllRecords
+
+
 
 @api_view(['GET'])
 
@@ -20,27 +22,55 @@ def get_total(req):
     return Response(data)
 
 
+
+
+
+@api_view(['GET'])
+
+def get_allrecords(req):
+
+    if req.method == 'GET':
+       
+        records  = AllRecords.objects.all()
+        print(records ,"recordsss ")
+        serializer = AllRecordsSerializer (records , many =True )
+        return Response (serializer.data ,status = status.HTTP_200_OK)
+    return Response (serializer.data  ,status= status.HTTP_404_NOT_FOUND)
+
+
+
+ 
 @api_view(['POST'])
 
-def post_addtomyrecords(req, data):
+def post_addtomyrecords(req,data):
 
     if req.method == 'POST':
-     print(data, "dataaaaaaaaaaaa")
-     
+          data =json.loads(data)
+          y = {"Country":data["Country"],"TotalConfirmed":data["TotalConfirmed"],"TotalDeaths":data["TotalDeaths"],"TotalRecovered":data["TotalRecovered"],"Date":data["Date"]}
+          serializer = AllRecordsSerializer(data =y)
+ 
+          if serializer.is_valid ():
+            serializer.save()
+            return Response (serializer.data , status = status.HTTP_201_CREATED )
+        
+    return Response (serializer.data  ,status= status.HTTP_404_NOT_FOUND)
+
     
-    return Response( '')
+ 
 
 
-#In the index view of user.views: 
+
+
+ 
+
+
 @api_view(['GET' ,"POST"])
 
-def get_query(req,country,startdate,enddate):
-    print (country , "coooontryyyy")
+def get_country_statistic(req,country,startdate,enddate):
     if req.method =="GET":
-        text = {"sura" : "raneem"}
-        headers ={"name" : "sura"}
-        payload={"name" : "sura"}
-        print (country , "llllllllllllllllll")
+        text = {"sura" : "ranee"}
+        headers ={"name" : "raneem"}
+        payload={"name" : "rrrr"}
         url =f"https://api.covid19api.com/country/{country}/status/confirmed?from={startdate}T00:00:00Z&to={enddate}T00:00:00Z"
         
      
@@ -65,27 +95,15 @@ def get_summary(req):
 
 
 
+@api_view (['DELETE'])
 
+def delete_id (request , id): 
+    
 
-# def seed_total_statistics():
-#     for i in get_query():
-#         total = TotalStatistics(
-#         TotalConfirmed=i["TotalConfirmed"],
-#         TotalDeaths=i["TotalDeaths"],
-#         TotalRecovered =i["TotalRecovered"],
-#   )
-#     total.save()
-
-
-# def clear_data():
-#       TotalStatistics.objects.all().delete()
-
-
-# class Command(BaseCommand):
-#     def handle(self, *args, **options):
-#         seed_total_statistics()
-#     # clear_data()
-#         print("completed")
+    record = AllRecords.objects.get (id = id)
+    if request.method == "DELETE":
+        record.delete()
+        return Response (status.HTTP_204_NO_CONTENT)
 
 
 
@@ -95,45 +113,4 @@ def get_summary(req):
 
 
 
-
-
-
-
-# def get_fishs():
-#     url = 'https://api.covid19api.com/world/total'
-#     r = requests.get(url, headers={'Content-Type':      
-#     'application/json'})
-#     fish = r.json()
-#     return fish
-
-# def seed_fish():
-#     for i in get_fishs():
-#         fish = TotalStatistics(
-#         TotalConfirmed=i["TotalConfirmed"],
-#         TotalDeaths=i["TotalDeaths"],
-#         TotalRecovered = i["TotalRecovered"]
-
-#     )
-#     fish.save()
-
-
-# class Command(BaseCommand):
-#     def handle(self, *args, **options):
-#      seed_fish()
-#     # clear_data()
-#      print("completed")
-
-
-# # def totalStatistic ():
- 
-
-# #     requests_response = requests.get('https://api.covid19api.com/world/total')
-
-# #     django_response = HttpResponse(
-# #     content=requests_response.content,
-# #     status=requests_response.status_code,
-# #     content_type=requests_response.headers['Content-Type']
-# # )
-
-# #     return django_response
 
